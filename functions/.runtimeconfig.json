@@ -1,0 +1,8 @@
+{
+  "env": {
+    "pipedrive_token": "49cbac330809e203f0f7f3287392762f8dae9a66",
+    "bling_api_key": "78a20872ca41ada46208cc14bd06c187dd98c2bd209dfd01d1feccd1d14ca6811d02631a",
+    "pipedrive_url": "https://api.pipedrive.com/v1/",
+    "bling_url": "https://bling.com.br/Api/v2/pedido/json/"
+  }
+}
