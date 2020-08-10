@@ -24,8 +24,8 @@
       "@controllers/*": [
         "./src/controllers/*"
       ],
-      "@models/*": [
-        "./src/models/*"
+      "@model/*": [
+        "src/model/*"
       ],
       "@views/*": [
         "./src/views/*"

@@ -3,6 +3,8 @@ import { requestProductsPipedrive } from '@services/PipeDriveProductsService'
 import { requestBlingService } from '@services/PostBlingService'
 import { IProductsRequest } from "@interfaces/IProductsRequest"
 import { IPipeDriveRequest } from '@interfaces/IPipeDriveRequest'
+import { mongooseCreateDocument } from '@services/MongoService'
+
 
 class Webhook {
   public async handler(req: Request, res: Response) {
@@ -12,16 +14,20 @@ class Webhook {
     }
 
     const pipeDriveRequest: IPipeDriveRequest = req.body.current
+
     const pipeDriveProducts: IProductsRequest[] = await requestProductsPipedrive(pipeDriveRequest.id)
 
-    const orderAlreadyExists: any = await requestBlingService(pipeDriveRequest, pipeDriveProducts)
+    const orderAlreadyExists = await requestBlingService(pipeDriveRequest, pipeDriveProducts)
 
 
     if (orderAlreadyExists.retorno.erros) {
       res.status(404).send({ message: orderAlreadyExists })
       throw new Error(JSON.stringify(orderAlreadyExists));
     }
+
+    await mongooseCreateDocument(pipeDriveRequest)
     console.log("Created order!");
+
     res.status(201).send({ message: "Created order!" })
   }
 }

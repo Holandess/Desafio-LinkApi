@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
-
-const { DB_USER, DB_PASS, DB_HOST, DB_NAME, DB_PORT } = process.env
+import { config } from "firebase-functions"
+const { db_user, db_pass, db_name, db_host, db_port } = config().env
 
 
 mongoose.connect(
-  `mongodb+sr://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`,
+  `mongodb+srv://${db_user}:${db_pass}@linkapi.umkaq.gcp.mongodb.net/${db_name}?retryWrites=true&w=majority`,
   {
-    useNewUrlParser: true,
-  }
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  },
+
 )
+
 
 mongoose.connection.on('error', () => console.error('connection error:'))
 mongoose.connection.once('open', () => console.log('database connected'))
+
+export default mongoose
